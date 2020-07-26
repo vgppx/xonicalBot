@@ -48,12 +48,13 @@ We offer coaching to all players no matter where you are on the ladder, learn mo
   // if the user is already registered then tell them this.
   // if the user is not registered then send them a link to register and information about registering.
   if (command === "register") {
-    if (message.author === registered) {
-      message.author.send(`You are already registered with Xonical Networks, your profile link is` + profileURL + `. If you need to reset your password or login visit https://xonical.co.uk/login`);
-    }
-    if (message.author === !registered) {
-      message.author.send(`We have checked our database to see if you're registered but didn't find anything. If this is true and you are not registered, please go to https://xonical.co.uk/register and get gaming! If you typed !register and are already registered but see this message, please let the staff know.`);
-    }
+    message.reply("Register here https://xonical.co.uk/register for rewards and exclusive events.");
+    // if (message.author === registered) {
+    //   message.author.send(`You are already registered with Xonical Networks, your profile link is` + profileURL + `. If you need to reset your password or login visit https://xonical.co.uk/login`);
+    // }
+    // if (message.author === !registered) {
+    //   message.author.send(`We have checked our database to see if you're registered but didn't find anything. If this is true and you are not registered, please go to https://xonical.co.uk/register and get gaming! If you typed !register and are already registered but see this message, please let the staff know.`);
+    // }
   }
 
   // COMMAND : !coach will send a direct message to every single user with the role of coach so they know when someone is looking for a coach.
