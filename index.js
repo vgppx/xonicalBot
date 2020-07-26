@@ -17,24 +17,35 @@ client.on('ready', () => {
 });
 // Set bot data END
 
-// When someone joins the server, send them a welcome message with some instructions
+// When someone joins the server, send them a welcome message with some instructions.
 client.on('guildMemberAdd', member => {
-  member.send(`Welcome ` + member + ` to Xonical Networks. Visit <https://xonical.co.uk> and register to start playing, 
-  competing and evolving yourself into a better gamer, all whilst earning rewards. The more you play, the more you earn.
-
-  ** before you can join any channels on the Discord server, you must select games you play by reacting to the message in <#674319980145147914> **
+  member.send(`Welcome to Xonical Networks, ` + member + `. Visit <https://xonical.co.uk> and register to start playing, competing and evolving yourself into a better gamer, all whilst earning rewards. The more you play, the more you earn.
   
-  We offer both FREE and paid coaching to all players no matter where you are on the ladder, learn more <https://xonical.co.uk/coaching>.`)
+  ** Before you can join any channels on the Discord server, you must select games you play by reacting to the message in <#674319980145147914> **
+          
+  We offer coaching to all players no matter where you are on the ladder, learn more <https://xonical.co.uk/coaching>.`)
 });
 
+// When anyone messages.
 client.on("message", async message => {
   if (message.author.bot) return;
   if (message.content.indexOf(config.prefix) !== 0) return;
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
-  // Coach Request Command START
-  if (message.content.toLowerCase().split(' ')[0] === config.prefix + "coach") {
+  // COMMAND : !joined will send a direct message to the person who used the command, the message will be a replica of the welcome message.
+  if (command === "joined") {
+    message.author.send(`Welcome to Xonical Networks, ` + message.author +
+
+      `. Visit <https://xonical.co.uk> and register to start playing, competing and evolving yourself into a better gamer, all whilst earning rewards. The more you play, the more you earn.
+  
+** Before you can join any channels on the Discord server, you must select games you play by reacting to the message in <#674319980145147914> **
+        
+We offer coaching to all players no matter where you are on the ladder, learn more <https://xonical.co.uk/coaching>.`)
+  }
+
+  // COMMAND : !coach will send a direct message to every single user with the role of coach so they know when someone is looking for a coach.
+  if (command === "coach") {
     let coachRole = message.guild.roles.get(config.coachRoleId);
     let members = [];
     for (let i = 0; i < message.guild.members.array().length; i++) {
@@ -48,11 +59,11 @@ client.on("message", async message => {
         If you want to coach them you can find them quickly in ${message.url}`);
     }
   }
-  // Coach Request Command END
 
-  // Check and Add points START
-  if (message.content.toLowerCase().split(' ')[0] === config.prefix + "points") {
-
+  // COMMAND : !points will send the user a message in the channel they sent the command in, the message will display how many points they have if they are registered.
+  // if the user is not registered with Xonical Networks then the bot will send them a direct message to convert them.
+  if (command === "points") {
+    message.reply(" you have " + `NaN` + ` points with Xonical Networks! This includes the website and Discord server! You can redeem these points for a coaching session, purchase VIP perks or enter in tournaments. Learn more here https://xonical.co.uk/points`);
     // has user messaged in the last 10 seconds?
     // true = do nothing
     // false = addPoints()
