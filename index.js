@@ -44,6 +44,18 @@ client.on("message", async message => {
 We offer coaching to all players no matter where you are on the ladder, learn more <https://xonical.co.uk/coaching>.`)
   }
 
+  // COMMAND : !register will send a direct message to the person who used the command.
+  // if the user is already registered then tell them this.
+  // if the user is not registered then send them a link to register and information about registering.
+  if (command === "register") {
+    if (message.author === registered) {
+      message.author.send(`You are already registered with Xonical Networks, your profile link is` + profileURL + `. If you need to reset your password or login visit https://xonical.co.uk/login`);
+    }
+    if (message.author === !registered) {
+      message.author.send(`We have checked our database to see if you're registered but didn't find anything. If this is true and you are not registered, please go to https://xonical.co.uk/register and get gaming! If you typed !register and are already registered but see this message, please let the staff know.`);
+    }
+  }
+
   // COMMAND : !coach will send a direct message to every single user with the role of coach so they know when someone is looking for a coach.
   if (command === "coach") {
     let coachRole = message.guild.roles.get(config.coachRoleId);
@@ -63,25 +75,21 @@ We offer coaching to all players no matter where you are on the ladder, learn mo
   // COMMAND : !points will send the user a message in the channel they sent the command in, the message will display how many points they have if they are registered.
   // if the user is not registered with Xonical Networks then the bot will send them a direct message to convert them.
   if (command === "points") {
-    message.reply(" you have " + `NaN` + ` points with Xonical Networks! This includes the website and Discord server! You can redeem these points for a coaching session, purchase VIP perks or enter in tournaments. Learn more here https://xonical.co.uk/points`);
-    // has user messaged in the last 10 seconds?
-    // true = do nothing
-    // false = addPoints()
-    /* addPoints {
-      if user exists on website, add points to user
-      if user doesn't exist on website, send user a message saying 
-      "You're missing out on points at Xonical Networks - Sign up to not miss out https://xonical.co.uk/join"
-      but only send message once per day, so if they have been messaged by the bot already today, don't send.
-    }
-    */
-
-    // console.log(points);
-
-    // message.author.send(message.author + ` you have ` + points + ` points throughout the Xonical Networks! This includes the website 
-    //   and Discord server! You can use these points to hire a coach or purchase VIP perks. Learn more here https://xonical.co.uk`);
+    message.reply("!points is under development. Please register to use this command in the future - https://xonical.co.uk/register");
+    // if (message.author.hasSentMessageInLast10Seconds === true) {
+    //   return null;
+    // }
+    // else if (message.author.hasSentMessageInLast10Seconds === false) {
+    //   if (message.author === registered) {
+    //     addPoints(1, message.author)
+    //     message.reply(" you have " + `NaN` + ` points with Xonical Networks! This includes the website and Discord server! You can redeem these points for a coaching session, purchase VIP perks or enter in tournaments. Learn more here https://xonical.co.uk/points`);
+    //     message.author.send(` you have ` + message.author.XPoints + `. Redeem them here https://xonical.co.uk`)
+    //   }
+    //   else if (message.author === !registered) {
+    //     message.author.send(`We have checked our database to see if you're registered but didn't find anything. If this is true and you are not registered, please go to https://xonical.co.uk/register and get gaming! If you typed !points and are already registered but see this message, please let the staff know.`);
+    //   }
+    // }
   }
-
-  // Check and Add points END
 
   if (command === "kick") {
     if (!message.member.roles.some(r => ["Administrator", "Moderator"].includes(r.name)))
